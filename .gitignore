@@ -1,0 +1,27 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Python environment files
+*.env
+.env
+
+# PyCharm project files
+.idea/
+
+# Log files
+*.log
+
+# Image cache or generated images
+images/
+
+# Test or temp files
+*.tmp
+*.bak
+*.swp
