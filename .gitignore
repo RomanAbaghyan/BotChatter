@@ -15,6 +15,12 @@ env/
 # PyCharm project files
 .idea/
 
+# macOS system files
+.DS_Store
+
+# VSCode settings (if used)
+.vscode/
+
 # Log files
 *.log
 
