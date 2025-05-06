@@ -5,15 +5,15 @@ from aiogram import Router, F
 from aiogram.filters import CommandStart, Command
 from aiogram.types import Update, Message
 
+from config import settings
+
 user_router = Router()
 
-
-API_URL = 'https://openrouter.ai/api/v1/chat/completions'
 
 @user_router.message(CommandStart())
 async def start(message: Message) -> None:
     await message.answer(
-        "👋 Hi, I'm *BotChatter*! Your friendly AI companion powered by ChatGPT.\n\n"
+        "👋 Hi, I'm *BotChatter*! Your friendly AI companion powered by DeepSeek.\n\n"
         "Just type your message and I’ll reply with answers, suggestions, or a friendly chat.\n\n"
         "_Try asking something like:_\n"
         "- What's the capital of Iceland?\n"
@@ -29,7 +29,7 @@ async def menu_cmd(message: Message):
     user_message = message.text
 
     headers = {
-        "Authorization": f"Bearer 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",
+        "Authorization": f"Bearer {settings.HF_TOKEN}",
         "Content-Type": "application/json",
         "X-Title": "BotChatter",  # optional
     }
@@ -41,13 +41,12 @@ async def menu_cmd(message: Message):
     }
 
     # Send the POST request to the DeepSeek API
-    response = requests.post(API_URL, json=data, headers=headers)
+    response = requests.post(settings.API_URL, json=data, headers=headers)
 
     if response.status_code == 200:
         result = response.json()
-        # print(result)
     else:
-        result = {"error": response.text}
+        result = response.text
 
     if isinstance(result, dict) and len(result) > 0:
         bot_reply = result.get('choices', "Sorry, I couldn't understand that.")[0].get('message').get('content')
@@ -61,7 +60,7 @@ async def menu_cmd(message: Message):
 # @user_router.message(Command('payment', 'name'))
 # async def menu_cmd(message: types.Message):
 #     await message.answer("Payment methods:")
-#
+
 
 # @user_router.message(Command('Shipping', 'name'))
 # async def menu_cmd(message: types.Message):
