@@ -5,16 +5,18 @@ import os
 
 dotenv.load_dotenv()
 
-class Config:
+class Settings:
     __instance = None
     def __new__(cls):
         if cls.__instance is None:
             cls.__instance = super().__new__(cls)
-            cls.__instance.init_env()
+            cls.__instance.__init__()
         return cls.__instance
 
-    def init_env(self):
+    def __init__(self):
         self.BOT_TOKEN = self.get_env("BOT_TOKEN")
+        self.HF_TOKEN = self.get_env("HF_TOKEN")
+        self.API_URL = self.get_env("API_URL")
 
     def get_env(self, key: str, cast: Optional[type] = None):
         value = os.environ.get(key)
@@ -23,3 +25,6 @@ class Config:
         if cast is not None:
             return cast(value)
         return value
+
+
+settings = Settings()
