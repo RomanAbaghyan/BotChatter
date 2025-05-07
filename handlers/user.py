@@ -5,7 +5,7 @@ from aiogram.enums import ParseMode
 from aiogram.filters import CommandStart, Command
 from aiogram.types import Update, Message
 
-from helpers.markdown import prepare_markdown_message
+from helpers.utils import send_message
 from config import settings
 
 user_router = Router()
@@ -16,7 +16,7 @@ async def start(message: Message) -> None:
     await message.answer(
         "👋 Hi, I'm *BotChatter*! Your friendly AI companion powered by DeepSeek.\n\n"
         "Just type your message and I’ll reply with answers, suggestions, or a friendly chat.\n\n"
-        "- Try asking something like:_\n"
+        "- Try asking something like:\n"
         "- What's the capital of Iceland?\n"
         "- Help me write a Python function\n"
         "- Tell me a fun fact\n\n"
@@ -54,8 +54,7 @@ async def menu_cmd(message: Message):
     else:
         bot_reply = "Error: Unable to generate a response."
 
-    # await message.answer(prepare_markdown_message(bot_reply), parse_mode=ParseMode.MARKDOWN)
-    await message.answer(bot_reply, parse_mode=ParseMode.MARKDOWN)
+    await send_message(message, bot_reply)
 
 
 # @user_router.message(Command('payment', 'name'))
